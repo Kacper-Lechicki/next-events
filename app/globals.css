@@ -52,7 +52,8 @@
   --color-border-dark: var(--color-border-dark);
   --color-dark-100: var(--color-dark-100);
   --color-dark-200: var(--color-dark-200);
-  --font-family-sans: var(--font-schibsted-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-family-sans: var(--font-schibsted-grotesk), ui-sans-serif, system-ui,
+    sans-serif;
   --font-family-mono: var(--font-martian-mono), ui-monospace, monospace;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -106,7 +107,8 @@
 }
 
 @utility font-schibsted-grotesk {
-  font-family: var(--font-schibsted-grotesk), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-schibsted-grotesk), ui-sans-serif, system-ui,
+    sans-serif;
 }
 
 @utility font-martian-mono {
@@ -175,7 +177,7 @@
   }
 
   .events {
-    @apply grid md:grid-cols-3 gap-10 sm:grid-cols-2 grid-cols-1;
+    @apply grid md:grid-cols-3 gap-10 sm:grid-cols-2 grid-cols-1 list-none;
   }
 
   #event-card {
