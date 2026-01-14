@@ -1,7 +1,15 @@
 const Home = () => {
-  console.log('What type of a component am I?');
+  return (
+    <section>
+      <h1 className="text-center">
+        The Hub for Every Dev <br /> Event You Can`t Miss
+      </h1>
 
-  return <div className="text-5xl underline">Welcome to Next.js</div>;
+      <p className="text-center mt-5">
+        Hackathons, Meetups and Conferences, All in One Place
+      </p>
+    </section>
+  );
 };
 
 export default Home;
