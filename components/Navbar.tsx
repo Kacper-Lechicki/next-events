@@ -20,9 +20,7 @@ const Navbar = () => {
       <nav>
         <Link href="/" className="logo" onClick={handleLogoClick}>
           <Image
-            preload
-            loading="eager"
-            fetchPriority="high"
+            priority
             src="/icons/logo.png"
             alt="logo"
             width={24}
@@ -32,6 +30,7 @@ const Navbar = () => {
               height: '24px',
             }}
           />
+
           <p>DevEvent</p>
         </Link>
 

@@ -1,12 +1,18 @@
 import EventCard from '@/components/EventCard';
 import ExploreBtn from '@/components/ExploreBtn';
-import { IEvent } from '@/database';
+import { Event, IEvent } from '@/database';
+import connectDB from '@/lib/mongodb';
+import { cache } from 'react';
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+const getEvents = cache(async () => {
+  await connectDB();
+  const events = await Event.find().sort({ createdAt: -1 }).lean();
+
+  return JSON.parse(JSON.stringify(events));
+});
 
 const Page = async () => {
-  const response = await fetch(`${BASE_URL}/api/events`);
-  const { events } = await response.json();
+  const events = await getEvents();
 
   return (
     <section className="mt-20">
@@ -20,15 +26,15 @@ const Page = async () => {
 
       <ExploreBtn />
 
-      <div className="mt-20 space-y-7">
+      <div id="events" className="scroll-mt-28 mt-20 space-y-7">
         <h3>Featured Events</h3>
 
         <ul className="events">
           {events &&
             events.length > 0 &&
-            events.map((event: IEvent) => (
+            events.map((event: IEvent, index: number) => (
               <li key={event.title}>
-                <EventCard {...event} />
+                <EventCard {...event} index={index} />
               </li>
             ))}
         </ul>
