@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import { Schibsted_Grotesk, Martian_Mono } from 'next/font/google';
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages } from 'next-intl/server';
 
 import './globals.css';
 
@@ -18,26 +20,33 @@ const martianMono = Martian_Mono({
   display: 'swap',
 });
 
-export const metadata: Metadata = {
-  title: 'DevEvent',
-  description: "The hub for every dev event you mustn't miss!",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const messages: any = await getMessages();
+  return {
+    title: messages.metadata.title,
+    description: messages.metadata.description,
+  };
+}
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const messages = await getMessages();
+
   return (
     <html
       lang="en"
       className={`${schibstedGrotesk.variable} ${martianMono.variable}`}
     >
       <body className="min-h-screen antialiased">
-        <Navbar />
-        <BackgroundEffects />
+        <NextIntlClientProvider messages={messages}>
+          <Navbar />
+          <BackgroundEffects />
 
-        <main>{children}</main>
+          <main>{children}</main>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

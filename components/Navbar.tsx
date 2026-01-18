@@ -3,8 +3,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import posthog from 'posthog-js';
+import { useTranslations } from 'next-intl';
 
 const Navbar = () => {
+  const t = useTranslations('nav');
+
   const handleLogoClick = () => {
     posthog.capture('logo_clicked');
   };
@@ -31,20 +34,20 @@ const Navbar = () => {
             }}
           />
 
-          <p>DevEvent</p>
+          <p>{t('logo')}</p>
         </Link>
 
         <ul>
           <Link href="/" onClick={() => handleNavLinkClick('Home')}>
-            Home
+            {t('home')}
           </Link>
 
           <Link href="/" onClick={() => handleNavLinkClick('Events')}>
-            Events
+            {t('events')}
           </Link>
 
           <Link href="/" onClick={() => handleNavLinkClick('Create Event')}>
-            Create Event
+            {t('createEvent')}
           </Link>
         </ul>
       </nav>

@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import posthog from 'posthog-js';
 import { useState } from 'react';
+// removed unused import
 
 interface Props {
   title: string;
