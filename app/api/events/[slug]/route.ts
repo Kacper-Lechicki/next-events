@@ -55,10 +55,6 @@ export async function GET(
       { status: 200 },
     );
   } catch (e) {
-    if (NODE_ENV === 'development') {
-      console.error('Error fetching event by slug: ', e);
-    }
-
     if (e instanceof Error) {
       if (e.message.includes('MONGODB_URI')) {
         return NextResponse.json(

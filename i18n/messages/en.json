@@ -35,7 +35,33 @@
     "bookSpot": "Book Your Spot",
     "joinPeople": "Join {count} people who already booked their spot",
     "beTheFirst": "Be the first to book your spot",
-    "noSimilarEvents": "No similar events found."
+    "noSimilarEvents": "No similar events found.",
+    "create": {
+      "title": "Create Event",
+      "subtitle": "Host your own event and connect with developers.",
+      "submit": "Create Event",
+      "success": "Event created successfully!",
+      "form": {
+        "title": "Event Title",
+        "description": "Description",
+        "overview": "Overview (Short summary)",
+        "image": "Banner Image URL",
+        "venue": "Venue Name",
+        "location": "Location (City, Country)",
+        "date": "Date",
+        "time": "Time (e.g., 10:00 AM)",
+        "mode": "Mode",
+        "modes": {
+          "online": "Online",
+          "offline": "Offline",
+          "hybrid": "Hybrid"
+        },
+        "audience": "Target Audience",
+        "organizer": "Organizer Name",
+        "agenda": "Agenda Items (comma separated)",
+        "tags": "Tags (comma separated)"
+      }
+    }
   },
   "common": {
     "exploreEvents": "Explore Events",
