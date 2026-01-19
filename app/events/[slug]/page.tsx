@@ -204,7 +204,7 @@ const EventDetailsPage = async ({ params }: PageParams) => {
                 : t('beTheFirst')}
             </p>
 
-            <BookEvent />
+            <BookEvent eventId={event._id as unknown as string} />
           </div>
         </aside>
       </div>
