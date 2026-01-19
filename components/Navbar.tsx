@@ -38,10 +38,6 @@ const Navbar = () => {
         </Link>
 
         <ul>
-          <Link href="/" onClick={() => handleNavLinkClick('Home')}>
-            {t('home')}
-          </Link>
-
           <Link href="/" onClick={() => handleNavLinkClick('Events')}>
             {t('events')}
           </Link>

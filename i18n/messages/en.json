@@ -20,7 +20,20 @@
     "description": "Event Description",
     "overview": "Overview",
     "eventDetails": "Event Details",
-    "bookEvent": "Book Event"
+    "bookEvent": "Book Event",
+    "agenda": "Agenda",
+    "aboutOrganizer": "About the Organizer",
+    "form": {
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "Enter your email address",
+      "submit": "Submit",
+      "submitting": "Submitting...",
+      "success": "Thank you for signing up"
+    },
+    "notFound": "Event Not Found",
+    "bookSpot": "Book Your Spot",
+    "joinPeople": "Join {count} people who already booked their spot",
+    "beTheFirst": "Be the first to book your spot"
   },
   "common": {
     "exploreEvents": "Explore Events"
