@@ -333,7 +333,14 @@ void main() {
         }
       };
 
-      window.addEventListener('resize', updatePlacement);
+      let resizeTimeout: NodeJS.Timeout;
+
+      const handleResize = () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(updatePlacement, 100);
+      };
+
+      window.addEventListener('resize', handleResize);
       updatePlacement();
       animationIdRef.current = requestAnimationFrame(loop);
 
@@ -343,7 +350,8 @@ void main() {
           animationIdRef.current = null;
         }
 
-        window.removeEventListener('resize', updatePlacement);
+        window.removeEventListener('resize', handleResize);
+        clearTimeout(resizeTimeout);
 
         if (renderer) {
           try {
@@ -393,43 +401,10 @@ void main() {
   ]);
 
   useEffect(() => {
-    if (!uniformsRef.current || !containerRef.current || !rendererRef.current)
-      return;
+    const hasMouse = window.matchMedia('(pointer: fine)').matches;
 
-    const u = uniformsRef.current;
-    const renderer = rendererRef.current;
+    if (!followMouse || !hasMouse) return;
 
-    u.raysColor.value = hexToRgb(raysColor);
-    u.raysSpeed.value = raysSpeed;
-    u.lightSpread.value = lightSpread;
-    u.rayLength.value = rayLength;
-    u.pulsating.value = pulsating ? 1.0 : 0.0;
-    u.fadeDistance.value = fadeDistance;
-    u.saturation.value = saturation;
-    u.mouseInfluence.value = mouseInfluence;
-    u.noiseAmount.value = noiseAmount;
-    u.distortion.value = distortion;
-
-    const { clientWidth: wCSS, clientHeight: hCSS } = containerRef.current;
-    const dpr = renderer.dpr;
-    const { anchor, dir } = getAnchorAndDir(raysOrigin, wCSS * dpr, hCSS * dpr);
-    u.rayPos.value = anchor;
-    u.rayDir.value = dir;
-  }, [
-    raysColor,
-    raysSpeed,
-    lightSpread,
-    raysOrigin,
-    rayLength,
-    pulsating,
-    fadeDistance,
-    saturation,
-    mouseInfluence,
-    noiseAmount,
-    distortion,
-  ]);
-
-  useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (!containerRef.current || !rendererRef.current) return;
       const rect = containerRef.current.getBoundingClientRect();
@@ -438,10 +413,8 @@ void main() {
       mouseRef.current = { x, y };
     };
 
-    if (followMouse) {
-      window.addEventListener('mousemove', handleMouseMove);
-      return () => window.removeEventListener('mousemove', handleMouseMove);
-    }
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [followMouse]);
 
   return (

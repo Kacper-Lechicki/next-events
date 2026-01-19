@@ -1,25 +1,40 @@
 import EventCard from '@/components/EventCard';
 import ExploreBtn from '@/components/ExploreBtn';
+import Pagination from '@/components/Pagination';
 import { Event, IEvent } from '@/database';
 import connectDB from '@/lib/mongodb';
 import { cache } from 'react';
 import { getTranslations } from 'next-intl/server';
 
-const getEvents = cache(async () => {
+const getEvents = cache(async (page: number, limit: number) => {
   await connectDB();
-  const events = await Event.find().sort({ createdAt: -1 }).lean();
+  const skip = (page - 1) * limit;
 
-  return JSON.parse(JSON.stringify(events));
+  const [events, totalCount] = await Promise.all([
+    Event.find().sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
+    Event.countDocuments(),
+  ]);
+
+  return {
+    events: JSON.parse(JSON.stringify(events)),
+    totalPages: Math.ceil(totalCount / limit),
+  };
 });
 
-const Page = async () => {
+type Props = {
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
+};
+
+const Page = async (props: Props) => {
+  const searchParams = await props.searchParams;
+  const page = Math.max(1, Number(searchParams?.page) || 1);
+  const limit = 5;
   const t = await getTranslations('home');
-  const events = await getEvents();
+  const { events, totalPages } = await getEvents(page, limit);
 
   return (
     <section className="mt-10">
       <h1 className="text-center whitespace-pre-line">{t('hero.title')}</h1>
-
       <p className="text-center mt-5">{t('hero.subtitle')}</p>
 
       <ExploreBtn />
@@ -36,6 +51,8 @@ const Page = async () => {
               </li>
             ))}
         </ul>
+
+        {events.length > 0 && <Pagination totalPages={totalPages} />}
       </div>
     </section>
   );

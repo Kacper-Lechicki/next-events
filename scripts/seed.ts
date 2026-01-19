@@ -1,5 +1,11 @@
+import * as dotenv from 'dotenv';
+import path from 'path';
+
+dotenv.config({ path: path.resolve(process.cwd(), '.env.local') });
+dotenv.config({ path: path.resolve(process.cwd(), '.env') });
+
 import { connect } from 'mongoose';
-import Event, { IEvent } from '../database/event.model';
+import Event from '../database/event.model';
 
 const events = [
   {
@@ -66,6 +72,84 @@ const events = [
     organizer: 'Code Academy',
     tags: ['Coding', 'Bootcamp', 'Education'],
   },
+  {
+    title: 'Future of AI 2026',
+    description:
+      'Join us for a deep dive into the future of Artificial Intelligence.',
+    overview:
+      'Exploring the latest trends, ethical considerations, and real-world applications of AI.',
+    image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e',
+    venue: 'Virtual Tech Hub',
+    location: 'Online',
+    date: '2026-05-15',
+    time: '10:00',
+    mode: 'online',
+    audience: 'Tech Enthusiasts, Developers, Researchers',
+    agenda: ['Keynote Speech', 'Panel Discussion', 'Workshop'],
+    organizer: 'TechForward',
+    tags: ['Tech', 'AI', 'Future'],
+  },
+  {
+    title: 'Modern UI Design Patterns',
+    description:
+      'Master the art of creating intuitive and beautiful user interfaces.',
+    overview: 'Hands-on workshop for designers using modern tools.',
+    image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5',
+    venue: 'Design Center SF',
+    location: 'San Francisco, CA',
+    date: '2026-06-20',
+    time: '09:00',
+    mode: 'offline',
+    audience: 'UI/UX Designers',
+    agenda: ['Design Systems', 'Accessibility', 'Animation'],
+    organizer: 'DesignMatters',
+    tags: ['Design', 'UI', 'Workshop'],
+  },
+  {
+    title: 'Global Marketing Summit',
+    description: 'Connect with marketing professionals from around the globe.',
+    overview: 'Strategies for brand growth and digital marketing.',
+    image: 'https://images.unsplash.com/photo-1557804506-669a67965ba0',
+    venue: 'ExCeL London',
+    location: 'London, UK',
+    date: '2026-07-10',
+    time: '11:00',
+    mode: 'hybrid',
+    audience: 'Marketers, Entrepreneurs',
+    agenda: ['Digital Strategy', 'Content Trends', 'Networking Mixer'],
+    organizer: 'GlobalMarketers',
+    tags: ['Marketing', 'Business', 'Networking'],
+  },
+  {
+    title: 'React Native Workshop',
+    description: 'Build cross-platform mobile apps using React Native.',
+    overview: 'Intensive workshop for web developers going mobile.',
+    image: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee',
+    venue: 'CodeAcademy Online',
+    location: 'Online',
+    date: '2026-08-05',
+    time: '14:00',
+    mode: 'online',
+    audience: 'Web Developers',
+    agenda: ['Setup', 'Components', 'Navigation'],
+    organizer: 'DevCommunity',
+    tags: ['Tech', 'Coding', 'React Native'],
+  },
+  {
+    title: 'Creative Typography',
+    description: 'Explore the expressive power of type.',
+    overview: 'Creative session for graphic designers.',
+    image: 'https://images.unsplash.com/photo-1516962080544-eac695c93791',
+    venue: 'The Art Loft',
+    location: 'New York, NY',
+    date: '2026-09-12',
+    time: '13:00',
+    mode: 'offline',
+    audience: 'Graphic Designers',
+    agenda: ['History', 'Experimental Layouts', 'Review'],
+    organizer: 'TypeLovers',
+    tags: ['Design', 'Art', 'Typography'],
+  },
 ];
 
 async function seed() {
@@ -79,11 +163,21 @@ async function seed() {
     await connect(uri);
     console.log('Connected to MongoDB');
 
-    const createdEvents = await Event.create(events);
+    let createdCount = 0;
 
-    console.log(`Successfully created ${createdEvents.length} events`);
-    console.log(createdEvents.map((e: IEvent) => e.title));
+    for (const event of events) {
+      const exists = await Event.findOne({ title: event.title });
 
+      if (!exists) {
+        await Event.create(event);
+        console.log(`Created event: ${event.title}`);
+        createdCount++;
+      } else {
+        console.log(`Skipped existing event: ${event.title}`);
+      }
+    }
+
+    console.log(`Seeding complete. Created ${createdCount} new events.`);
     process.exit(0);
   } catch (error) {
     console.error('Error seeding events:', error);

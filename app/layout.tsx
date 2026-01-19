@@ -5,7 +5,9 @@ import { getMessages } from 'next-intl/server';
 
 import './globals.css';
 
+import ScrollToTop from '@/components/ScrollToTop';
 import Navbar from '@/components/Navbar';
+import InitialLoader from '@/components/InitialLoader';
 import BackgroundEffects from '@/components/BackgroundEffects';
 
 const schibstedGrotesk = Schibsted_Grotesk({
@@ -40,13 +42,13 @@ export default async function RootLayout({
     <html
       lang="en"
       className={`${schibstedGrotesk.variable} ${martianMono.variable}`}
-      data-scroll-behavior="smooth"
     >
       <body className="min-h-screen antialiased">
         <NextIntlClientProvider messages={messages}>
+          <InitialLoader />
+          <ScrollToTop />
           <Navbar />
           <BackgroundEffects />
-
           <main>{children}</main>
         </NextIntlClientProvider>
       </body>
