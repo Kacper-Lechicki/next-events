@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import posthog from 'posthog-js';
-import EventImage from '@/components/EventImage';
+import EventImage from '@/components/features/events/EventImage';
 
 interface Props {
   title: string;
@@ -42,7 +42,7 @@ const EventCard = ({
     >
       <div className="relative h-[300px] w-full">
         <EventImage
-          priority={index < 2}
+          preload
           src={image}
           alt={title}
           fill

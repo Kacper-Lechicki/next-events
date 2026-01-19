@@ -1,9 +1,11 @@
 'use server';
 
 import { Event } from '@/database';
-import connectDB from '@/lib/mongodb';
+import connectDB from '@/lib/db';
 
 export const getSimilarEventsBySlug = async (slug: string) => {
+  'use cache';
+
   try {
     await connectDB();
 
@@ -16,10 +18,7 @@ export const getSimilarEventsBySlug = async (slug: string) => {
       .limit(5)
       .lean();
 
-    return similarEvents.map((event) => ({
-      ...event,
-      _id: event._id.toString(),
-    }));
+    return JSON.parse(JSON.stringify(similarEvents));
   } catch {
     return [];
   }

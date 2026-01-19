@@ -1,12 +1,13 @@
-import EventCard from '@/components/EventCard';
-import ExploreBtn from '@/components/ExploreBtn';
-import Pagination from '@/components/Pagination';
+import EventCard from '@/components/features/events/EventCard';
+import ExploreBtn from '@/components/ui/ExploreBtn';
+import Pagination from '@/components/shared/Pagination';
 import { Event, IEvent } from '@/database';
-import connectDB from '@/lib/mongodb';
-import { cache } from 'react';
+import connectDB from '@/lib/db';
 import { getTranslations } from 'next-intl/server';
 
-const getEvents = cache(async (page: number, limit: number) => {
+async function getEvents(page: number, limit: number) {
+  'use cache';
+
   await connectDB();
   const skip = (page - 1) * limit;
 
@@ -19,7 +20,7 @@ const getEvents = cache(async (page: number, limit: number) => {
     events: JSON.parse(JSON.stringify(events)),
     totalPages: Math.ceil(totalCount / limit),
   };
-});
+}
 
 type Props = {
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;

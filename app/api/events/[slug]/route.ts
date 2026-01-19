@@ -1,5 +1,5 @@
 import { Event, IEvent } from '@/database';
-import connectDB from '@/lib/mongodb';
+import connectDB from '@/lib/db';
 import { NextRequest, NextResponse } from 'next/server';
 
 const NODE_ENV = process.env.NODE_ENV;

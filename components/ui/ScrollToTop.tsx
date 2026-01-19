@@ -1,22 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { usePathname } from 'next/navigation';
 import { ArrowUp } from 'lucide-react';
 
 const ScrollToTop = () => {
-  const pathname = usePathname();
   const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined' && window.history) {
-      window.history.scrollRestoration = 'manual';
-    }
-  }, []);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
 
   useEffect(() => {
     const toggleVisibility = () => {
@@ -28,6 +16,7 @@ const ScrollToTop = () => {
     };
 
     window.addEventListener('scroll', toggleVisibility);
+
     return () => window.removeEventListener('scroll', toggleVisibility);
   }, []);
 
