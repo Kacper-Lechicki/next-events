@@ -23,7 +23,7 @@ const Navbar = () => {
       <nav>
         <Link href="/" className="logo" onClick={handleLogoClick}>
           <Image
-            priority
+            preload
             src="/icons/logo.png"
             alt="logo"
             width={24}

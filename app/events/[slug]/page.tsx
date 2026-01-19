@@ -1,16 +1,15 @@
-import { cache } from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { getTranslations } from 'next-intl/server';
 
 import { Event, IEvent } from '@/database';
-import connectDB from '@/lib/mongodb';
-import EventImage from '@/components/EventImage';
-import BookEvent from '@/components/BookEvent';
+import connectDB from '@/lib/db';
+import EventImage from '@/components/features/events/EventImage';
+import BookEvent from '@/components/features/events/BookEvent';
 import { getSimilarEventsBySlug } from '@/lib/actions/event.actions';
-import EventCard from '@/components/EventCard';
-import BackButton from '@/components/BackButton';
+import EventCard from '@/components/features/events/EventCard';
+import BackButton from '@/components/ui/BackButton';
 
 const MOCK_TOTAL_BOOKINGS = 10;
 
@@ -18,15 +17,22 @@ interface PageParams {
   params: Promise<{ slug: string }>;
 }
 
-const getEvent = cache(async (slug: string): Promise<IEvent | null> => {
+async function getEvent(slug: string): Promise<IEvent | null> {
+  'use cache';
+
   try {
     await connectDB();
-    return await Event.findOne({ slug: slug.toLowerCase() }).lean<IEvent>();
+
+    const event = await Event.findOne({
+      slug: slug.toLowerCase(),
+    }).lean<IEvent>();
+
+    return event ? JSON.parse(JSON.stringify(event)) : null;
   } catch (error) {
     console.error('Failed to fetch event:', error);
     return null;
   }
-});
+}
 
 export async function generateMetadata({
   params,
@@ -147,7 +153,7 @@ const EventDetailsPage = async ({ params }: PageParams) => {
               src={image || '/images/event1.png'}
               alt={t('description')}
               fill
-              priority
+              preload
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
               className="object-cover"
             />

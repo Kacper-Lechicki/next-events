@@ -1,10 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useTranslations } from 'next-intl';
 
 export default function InitialLoader() {
-  const t = useTranslations('loader');
   const [show, setShow] = useState(true);
   const [isExiting, setIsExiting] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -25,7 +23,7 @@ export default function InitialLoader() {
         setShow(false);
         sessionStorage.setItem('has_visited', 'true');
       }, 800);
-    }, 2000);
+    }, 500);
 
     return () => {
       clearTimeout(mountTimer);
@@ -49,10 +47,6 @@ export default function InitialLoader() {
         <div className="h-16 w-16 animate-pulse rounded-full bg-primary/20 blur-xl"></div>
         <div className="absolute h-4 w-4 rounded-full bg-primary shadow-[0_0_20px_rgba(89,222,202,0.8)]"></div>
       </div>
-
-      <p className="mt-12 animate-pulse font-martian-mono text-sm tracking-[0.3em] text-primary/80">
-        {t('system')}
-      </p>
     </div>
   );
 }

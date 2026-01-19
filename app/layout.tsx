@@ -5,10 +5,10 @@ import { getMessages } from 'next-intl/server';
 
 import './globals.css';
 
-import ScrollToTop from '@/components/ScrollToTop';
-import Navbar from '@/components/Navbar';
-import InitialLoader from '@/components/InitialLoader';
-import BackgroundEffects from '@/components/BackgroundEffects';
+import ScrollToTop from '@/components/ui/ScrollToTop';
+import Navbar from '@/components/layout/Navbar';
+import InitialLoader from '@/components/shared/InitialLoader';
+import BackgroundEffects from '@/components/effects/BackgroundEffects';
 
 const schibstedGrotesk = Schibsted_Grotesk({
   variable: '--font-schibsted-grotesk',

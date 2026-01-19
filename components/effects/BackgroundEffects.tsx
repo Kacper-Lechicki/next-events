@@ -2,7 +2,7 @@
 
 import dynamic from 'next/dynamic';
 
-const LightRays = dynamic(() => import('@/components/LightRays'), {
+const LightRays = dynamic(() => import('@/components/effects/LightRays'), {
   ssr: false,
 });
 
