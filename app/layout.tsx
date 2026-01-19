@@ -21,7 +21,8 @@ const martianMono = Martian_Mono({
 });
 
 export async function generateMetadata(): Promise<Metadata> {
-  const messages: any = await getMessages();
+  const messages = await getMessages();
+
   return {
     title: messages.metadata.title,
     description: messages.metadata.description,
@@ -39,6 +40,7 @@ export default async function RootLayout({
     <html
       lang="en"
       className={`${schibstedGrotesk.variable} ${martianMono.variable}`}
+      data-scroll-behavior="smooth"
     >
       <body className="min-h-screen antialiased">
         <NextIntlClientProvider messages={messages}>

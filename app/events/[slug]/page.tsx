@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import EventImage from '@/components/EventImage';
 import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 
@@ -14,7 +14,7 @@ const EventDetailsPage = async ({ params }: EventDetailsPageParams) => {
   const t = await getTranslations('event');
 
   const {
-    event: { description, image, overview, date, time, location, mode, agenda },
+    event: { description, image, overview },
   } = await request.json();
 
   if (!description) {
@@ -30,15 +30,16 @@ const EventDetailsPage = async ({ params }: EventDetailsPageParams) => {
 
       <div className="details">
         <div className="content">
-          <Image
-            src={image}
-            alt="event banner"
-            width={800}
-            height={800}
-            priority
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
-            className="banner w-[800px] h-[800px]"
-          />
+          <div className="relative w-full h-[457px] rounded-lg overflow-hidden">
+            <EventImage
+              src={image || '/images/event1.png'}
+              alt="event banner"
+              fill
+              preload
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
+              className="object-cover"
+            />
+          </div>
 
           <section className="flex-col-gap-2">
             <h2>{t('overview')}</h2>

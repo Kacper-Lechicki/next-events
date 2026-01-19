@@ -3,8 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import posthog from 'posthog-js';
-import { useState } from 'react';
-// removed unused import
+import EventImage from './EventImage';
 
 interface Props {
   title: string;
@@ -16,22 +15,7 @@ interface Props {
   index: number;
 }
 
-const failedImages = new Set<string>();
-
-const EventCard = ({
-  title,
-  image,
-  slug,
-  location,
-  date,
-  time,
-  index,
-}: Props) => {
-  const [imgSrc, setImgSrc] = useState(
-    failedImages.has(image) ? '/images/event1.png' : image,
-  );
-  const isPriority = index < 2;
-
+const EventCard = ({ title, image, slug, location, date, time }: Props) => {
   const handleClick = () => {
     posthog.capture('event_card_clicked', {
       event_title: title,
@@ -49,17 +33,13 @@ const EventCard = ({
       onClick={handleClick}
     >
       <div className="relative h-[300px] w-full">
-        <Image
-          priority={isPriority}
-          src={imgSrc}
+        <EventImage
+          preload
+          src={image}
           alt={title}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="poster object-cover"
-          onError={() => {
-            failedImages.add(image);
-            setImgSrc('/images/event1.png');
-          }}
         />
       </div>
 
