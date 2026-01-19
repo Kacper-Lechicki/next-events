@@ -1,0 +1,41 @@
+{
+  "metadata": {
+    "title": "DevEvent",
+    "description": "The hub for every dev event you mustn't miss!"
+  },
+  "nav": {
+    "logo": "DevEvent",
+    "home": "Home",
+    "events": "Events",
+    "createEvent": "Create Event"
+  },
+  "home": {
+    "hero": {
+      "title": "The Hub for Every Dev\nEvent You Can't Miss",
+      "subtitle": "Hackathons, Meetups and Conferences, All in One Place"
+    },
+    "featuredEvents": "Featured Events"
+  },
+  "event": {
+    "description": "Event Description",
+    "overview": "Overview",
+    "eventDetails": "Event Details",
+    "bookEvent": "Book Event",
+    "agenda": "Agenda",
+    "aboutOrganizer": "About the Organizer",
+    "form": {
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "Enter your email address",
+      "submit": "Submit",
+      "submitting": "Submitting...",
+      "success": "Thank you for signing up"
+    },
+    "notFound": "Event Not Found",
+    "bookSpot": "Book Your Spot",
+    "joinPeople": "Join {count} people who already booked their spot",
+    "beTheFirst": "Be the first to book your spot"
+  },
+  "common": {
+    "exploreEvents": "Explore Events"
+  }
+}

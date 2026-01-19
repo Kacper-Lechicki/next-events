@@ -1,34 +1,38 @@
 import EventCard from '@/components/EventCard';
 import ExploreBtn from '@/components/ExploreBtn';
-import { IEvent } from '@/database';
+import { Event, IEvent } from '@/database';
+import connectDB from '@/lib/mongodb';
+import { cache } from 'react';
+import { getTranslations } from 'next-intl/server';
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+const getEvents = cache(async () => {
+  await connectDB();
+  const events = await Event.find().sort({ createdAt: -1 }).lean();
+
+  return JSON.parse(JSON.stringify(events));
+});
 
 const Page = async () => {
-  const response = await fetch(`${BASE_URL}/api/events`);
-  const { events } = await response.json();
+  const t = await getTranslations('home');
+  const events = await getEvents();
 
   return (
-    <section className="mt-20">
-      <h1 className="text-center">
-        The Hub for Every Dev <br /> Event You Can`t Miss
-      </h1>
+    <section className="mt-10">
+      <h1 className="text-center whitespace-pre-line">{t('hero.title')}</h1>
 
-      <p className="text-center mt-5">
-        Hackathons, Meetups and Conferences, All in One Place
-      </p>
+      <p className="text-center mt-5">{t('hero.subtitle')}</p>
 
       <ExploreBtn />
 
-      <div className="mt-20 space-y-7">
-        <h3>Featured Events</h3>
+      <div id="events" className="scroll-mt-28 mt-20 space-y-7">
+        <h3>{t('featuredEvents')}</h3>
 
         <ul className="events">
           {events &&
             events.length > 0 &&
-            events.map((event: IEvent) => (
+            events.map((event: IEvent, index: number) => (
               <li key={event.title}>
-                <EventCard {...event} />
+                <EventCard {...event} index={index} />
               </li>
             ))}
         </ul>

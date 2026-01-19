@@ -2,36 +2,35 @@
 
 import Image from 'next/image';
 import posthog from 'posthog-js';
+import { useTranslations } from 'next-intl';
 
 const ExploreBtn = () => {
+  const t = useTranslations('common');
+
   const handleClick = () => {
     posthog.capture('explore_events_clicked');
   };
 
   return (
-    <button
-      type="button"
+    <a
+      href="#events"
       id="explore-btn"
       className="mt-7 mx-auto"
       onClick={handleClick}
     >
-      <a href="#events">
-        <span>Explore Events</span>
+      <span>{t('exploreEvents')}</span>
 
-        <Image
-          loading="lazy"
-          fetchPriority="low"
-          src="/icons/arrow-down.svg"
-          alt="arrow-down"
-          width={20}
-          height={20}
-          style={{
-            width: '20px',
-            height: '20px',
-          }}
-        />
-      </a>
-    </button>
+      <Image
+        src="/icons/arrow-down.svg"
+        alt="arrow-down"
+        width={20}
+        height={20}
+        style={{
+          width: '20px',
+          height: '20px',
+        }}
+      />
+    </a>
   );
 };
 
