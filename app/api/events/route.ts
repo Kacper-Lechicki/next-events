@@ -70,8 +70,6 @@ export async function POST(req: NextRequest) {
       { status: 201 },
     );
   } catch (e) {
-    console.error(e);
-
     return NextResponse.json(
       {
         message: 'Event Creation Failed',

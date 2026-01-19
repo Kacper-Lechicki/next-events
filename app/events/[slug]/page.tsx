@@ -28,8 +28,7 @@ async function getEvent(slug: string): Promise<IEvent | null> {
     }).lean<IEvent>();
 
     return event ? JSON.parse(JSON.stringify(event)) : null;
-  } catch (error) {
-    console.error('Failed to fetch event:', error);
+  } catch {
     return null;
   }
 }
@@ -83,6 +82,7 @@ const EventDetailItem = ({
 
 const EventAgenda = async ({ items }: { items: string[] }) => {
   const t = await getTranslations('event');
+
   return (
     <div className="flex flex-col gap-2">
       <h2>{t('agenda')}</h2>

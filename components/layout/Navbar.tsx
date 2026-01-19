@@ -42,7 +42,10 @@ const Navbar = () => {
             {t('events')}
           </Link>
 
-          <Link href="/" onClick={() => handleNavLinkClick('Create Event')}>
+          <Link
+            href="/events/create"
+            onClick={() => handleNavLinkClick('Create Event')}
+          >
             {t('createEvent')}
           </Link>
         </ul>
