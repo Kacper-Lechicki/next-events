@@ -8,7 +8,7 @@ const LightRays = dynamic(() => import('@/components/LightRays'), {
 
 const BackgroundEffects = () => {
   return (
-    <div className="absolute inset-0 top-0 z-[-1] min-h-screen">
+    <div className="fixed inset-0 pointer-events-none">
       <LightRays
         raysOrigin="top-center-offset"
         raysColor="#5DFECA"

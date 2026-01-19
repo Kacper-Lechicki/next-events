@@ -8,6 +8,9 @@ import { Event, IEvent } from '@/database';
 import connectDB from '@/lib/mongodb';
 import EventImage from '@/components/EventImage';
 import BookEvent from '@/components/BookEvent';
+import { getSimilarEventsBySlug } from '@/lib/actions/event.actions';
+import EventCard from '@/components/EventCard';
+import BackButton from '@/components/BackButton';
 
 const MOCK_TOTAL_BOOKINGS = 10;
 
@@ -60,7 +63,14 @@ const EventDetailItem = ({
   label: string;
 }) => (
   <div className="flex items-center gap-2">
-    <Image src={icon} alt={alt} width={17} height={17} />
+    <Image
+      src={icon}
+      alt={alt}
+      width={17}
+      height={17}
+      className="w-[17px] h-[17px]"
+    />
+
     <p>{label}</p>
   </div>
 );
@@ -96,6 +106,7 @@ const EventDetailsPage = async ({ params }: PageParams) => {
   const { slug } = await params;
   const event = await getEvent(slug);
   const t = await getTranslations('event');
+  const tCommon = await getTranslations('common');
 
   if (!event) {
     return notFound();
@@ -115,8 +126,12 @@ const EventDetailsPage = async ({ params }: PageParams) => {
     tags,
   } = event;
 
+  const similarEvents: IEvent[] = await getSimilarEventsBySlug(slug);
+
   return (
     <section id="event" className="mt-10">
+      <BackButton label={tCommon('back')} />
+
       <div className="header mb-10 flex w-2/3 flex-col items-start gap-4 max-lg:w-full">
         <h1>{t('description')}</h1>
 
@@ -173,7 +188,7 @@ const EventDetailsPage = async ({ params }: PageParams) => {
           <EventTags tags={tags} />
         </div>
 
-        <aside className="w-full flex-1 border-l border-gray-700 pl-4">
+        <aside className="w-full flex-1 lg:pl-10 lg:border-l lg:border-gray-700">
           <div className="card-shadow flex w-full flex-col gap-6 rounded-[10px] border border-dark-200 bg-dark-100 px-5 py-6">
             <h2>{t('bookSpot')}</h2>
 
@@ -186,6 +201,24 @@ const EventDetailsPage = async ({ params }: PageParams) => {
             <BookEvent />
           </div>
         </aside>
+      </div>
+
+      <div className="flex w-full flex-col gap-4 pt-20">
+        <h2>{t('similarEvents')}</h2>
+
+        {similarEvents.length > 0 ? (
+          <div className="events">
+            {similarEvents.map((event: IEvent, index: number) => (
+              <EventCard key={index} {...event} index={index} />
+            ))}
+          </div>
+        ) : (
+          <div className="flex w-full flex-col items-center justify-center gap-4 rounded-lg border border-dark-200 bg-dark-100 p-10 text-center">
+            <p className="text-xl font-medium text-light-100">
+              {t('noSimilarEvents')}
+            </p>
+          </div>
+        )}
       </div>
     </section>
   );

@@ -7,8 +7,15 @@ import { useTranslations } from 'next-intl';
 const ExploreBtn = () => {
   const t = useTranslations('common');
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
     posthog.capture('explore_events_clicked');
+
+    const eventsSection = document.getElementById('events');
+
+    if (eventsSection) {
+      eventsSection.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (

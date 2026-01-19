@@ -121,7 +121,6 @@
   }
 
   html {
-    scroll-behavior: smooth;
     scrollbar-gutter: stable;
   }
 
@@ -158,7 +157,7 @@
   }
 
   header {
-    @apply glass sticky top-0 z-50;
+    @apply glass sticky top-0 z-50 max-md:rounded-none;
 
     nav {
       @apply flex flex-row justify-between mx-auto container sm:px-10 px-5 py-4;
@@ -168,7 +167,7 @@
       @apply flex flex-row items-center gap-2;
 
       p {
-        @apply text-xl font-bold italic max-sm:hidden;
+        @apply text-xl font-bold italic max-sm:hidden text-white mix-blend-difference;
       }
     }
 
@@ -176,7 +175,7 @@
       @apply flex flex-row items-center gap-8;
 
       a {
-        @apply text-light-200 hover:text-white transition-all duration-300 font-medium tracking-wide;
+        @apply text-white mix-blend-difference transition-all duration-300 font-medium tracking-wide hover:opacity-80;
       }
     }
   }
@@ -236,7 +235,7 @@
       }
 
       .booking {
-        @apply flex-1 w-full pl-4 border-l border-gray-700;
+        @apply flex-1 w-full lg:pl-10 lg:border-l lg:border-gray-700;
 
         .signup-card {
           @apply bg-dark-100 border-dark-200 card-shadow flex w-full flex-col gap-6 rounded-[10px] border px-5 py-6;

@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "title": "DevEvent",
+    "title": "DevEvents",
     "description": "The hub for every dev event you mustn't miss!"
   },
   "nav": {
-    "logo": "DevEvent",
+    "logo": "DevEvents",
     "home": "Home",
     "events": "Events",
     "createEvent": "Create Event"
@@ -23,6 +23,7 @@
     "bookEvent": "Book Event",
     "agenda": "Agenda",
     "aboutOrganizer": "About the Organizer",
+    "similarEvents": "Similar Events",
     "form": {
       "emailLabel": "Email Address",
       "emailPlaceholder": "Enter your email address",
@@ -33,9 +34,14 @@
     "notFound": "Event Not Found",
     "bookSpot": "Book Your Spot",
     "joinPeople": "Join {count} people who already booked their spot",
-    "beTheFirst": "Be the first to book your spot"
+    "beTheFirst": "Be the first to book your spot",
+    "noSimilarEvents": "No similar events found."
   },
   "common": {
-    "exploreEvents": "Explore Events"
+    "exploreEvents": "Explore Events",
+    "back": "Back"
+  },
+  "loader": {
+    "system": "LOADING SYSTEM"
   }
 }
